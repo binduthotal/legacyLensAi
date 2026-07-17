@@ -55,6 +55,7 @@ existing behavior.
 - Add source discovery and language detection.
 - Define parser interfaces.
 - Add fixtures and tests using sample projects.
+- Status: completed.
 
 ### Module 5: AI Retrieval Foundation
 
