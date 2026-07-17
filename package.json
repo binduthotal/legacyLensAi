@@ -1,0 +1,16 @@
+{
+  "name": "legacylens-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-powered legacy code knowledge transfer and migration platform.",
+  "scripts": {
+    "build": "echo \"No build configured yet. Module 1 is documentation and structure only.\"",
+    "test": "echo \"No tests configured yet. Module 1 is documentation and structure only.\"",
+    "lint": "echo \"No lint configured yet. Module 1 is documentation and structure only.\""
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

@@ -1,0 +1,7 @@
+packages:
+  - "frontend"
+  - "backend"
+  - "ai"
+  - "parser"
+  - "vector_db"
+  - "scripts"
