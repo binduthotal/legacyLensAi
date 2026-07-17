@@ -12,7 +12,8 @@ application's functionality, business logic, workflows, APIs, and user
 experience in the target technology stack.
 
 This repository is currently in **Module 1: Project Foundation & Documentation
-Baseline**. No product functionality has been implemented yet.
+Baseline / Module 2: Project Workspace & Tooling**. No product functionality has
+been implemented yet.
 
 ## Planned Capabilities
 
@@ -76,6 +77,7 @@ The project must not be generated in one pass.
 
 - [Project Plan](docs/project-plan.md)
 - [Module 1 Foundation](docs/module-1-foundation.md)
+- [Module 2 Workspace & Tooling](docs/module-2-workspace-tooling.md)
 - [Architecture](docs/architecture.md)
 - [Migration Workflow](docs/migration-workflow.md)
 - [Testing Strategy](docs/testing-strategy.md)
@@ -84,5 +86,20 @@ The project must not be generated in one pass.
 
 ## Local Development
 
-The runtime stack is intentionally not installed in Module 1. Implementation
-will begin only after module-level approval.
+The runtime application has not been implemented yet. Module 2 adds dependency
+metadata and dependency-free workspace validation.
+
+```bash
+npm.cmd run validate
+```
+
+After pnpm is installed, use the workspace commands:
+
+```bash
+pnpm install
+pnpm validate
+pnpm build
+pnpm test
+pnpm lint
+pnpm typecheck
+```

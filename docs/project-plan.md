@@ -41,6 +41,7 @@ existing behavior.
 - Add lint, format, and test tooling.
 - Add CI-ready scripts.
 - Add basic validation commands without introducing product behavior.
+- Status: completed.
 
 ### Module 3: Backend API Foundation
 

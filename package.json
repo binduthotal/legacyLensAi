@@ -3,14 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "description": "AI-powered legacy code knowledge transfer and migration platform.",
+  "type": "module",
   "scripts": {
-    "build": "echo \"No build configured yet. Module 1 is documentation and structure only.\"",
-    "test": "echo \"No tests configured yet. Module 1 is documentation and structure only.\"",
-    "lint": "echo \"No lint configured yet. Module 1 is documentation and structure only.\""
+    "build": "node scripts/run-workspaces.mjs build",
+    "dev": "node scripts/run-workspaces.mjs dev",
+    "format": "node scripts/verify-format-config.mjs",
+    "lint": "node scripts/run-workspaces.mjs lint",
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "node scripts/run-workspaces.mjs typecheck",
+    "validate": "node scripts/verify-workspace.mjs && node --test tests/*.test.mjs"
   },
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@9.15.0",
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^22.10.0",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
 }

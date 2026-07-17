@@ -1,0 +1,17 @@
+{
+  "name": "@legacylens/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Backend API and orchestration shell for LegacyLens AI.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "node ../scripts/verify-package.mjs .",
+    "dev": "node ../scripts/verify-package.mjs .",
+    "lint": "node ../scripts/verify-package.mjs .",
+    "test": "node ../scripts/verify-package.mjs .",
+    "typecheck": "node ../scripts/verify-package.mjs ."
+  }
+}
