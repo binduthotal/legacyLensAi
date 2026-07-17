@@ -9,9 +9,9 @@
   },
   "scripts": {
     "build": "node ../scripts/verify-package.mjs .",
-    "dev": "node ../scripts/verify-package.mjs .",
+    "dev": "node src/main.ts",
     "lint": "node ../scripts/verify-package.mjs .",
-    "test": "node ../scripts/verify-package.mjs .",
+    "test": "node --test ../tests/backend-api.test.mjs",
     "typecheck": "node ../scripts/verify-package.mjs ."
   }
 }

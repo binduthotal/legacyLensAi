@@ -11,9 +11,9 @@ Deliver production-ready migrations that faithfully reproduce the original
 application's functionality, business logic, workflows, APIs, and user
 experience in the target technology stack.
 
-This repository is currently in **Module 1: Project Foundation & Documentation
-Baseline / Module 2: Project Workspace & Tooling**. No product functionality has
-been implemented yet.
+This repository is currently in **Module 3: Backend API Foundation**. The
+backend has a minimal dependency-free API shell with health and readiness
+endpoints.
 
 ## Planned Capabilities
 
@@ -78,6 +78,7 @@ The project must not be generated in one pass.
 - [Project Plan](docs/project-plan.md)
 - [Module 1 Foundation](docs/module-1-foundation.md)
 - [Module 2 Workspace & Tooling](docs/module-2-workspace-tooling.md)
+- [Module 3 Backend API Foundation](docs/module-3-backend-api-foundation.md)
 - [Architecture](docs/architecture.md)
 - [Migration Workflow](docs/migration-workflow.md)
 - [Testing Strategy](docs/testing-strategy.md)
@@ -86,12 +87,26 @@ The project must not be generated in one pass.
 
 ## Local Development
 
-The runtime application has not been implemented yet. Module 2 adds dependency
-metadata and dependency-free workspace validation.
+Module 3 can be validated without installing dependencies:
 
 ```bash
 npm.cmd run validate
 ```
+
+Run the backend shell:
+
+```bash
+npm.cmd run dev
+```
+
+The backend listens on `http://127.0.0.1:4000` by default.
+
+Available endpoints:
+
+- `GET /health`
+- `GET /api/v1/health`
+- `GET /ready`
+- `GET /api/v1/ready`
 
 After pnpm is installed, use the workspace commands:
 
