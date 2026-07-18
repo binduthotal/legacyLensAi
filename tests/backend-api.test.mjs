@@ -25,6 +25,7 @@ test("health route returns source-independent service status", async () => {
   const router = createBackendRouter(
     createBackendConfig({
       NODE_ENV: "test",
+      PROJECT_REGISTRY_FILE: "NUL",
       SERVICE_NAME: "test-service",
       SERVICE_VERSION: "9.9.9",
     }),
@@ -41,7 +42,9 @@ test("health route returns source-independent service status", async () => {
 });
 
 test("ready route returns readiness payload", async () => {
-  const router = createBackendRouter(createBackendConfig({ NODE_ENV: "test" }));
+  const router = createBackendRouter(
+    createBackendConfig({ NODE_ENV: "test", PROJECT_REGISTRY_FILE: "NUL" }),
+  );
   const response = await router({ method: "GET", url: "/ready" });
 
   assert.equal(response.statusCode, 200);
@@ -53,7 +56,9 @@ test("ready route returns readiness payload", async () => {
 });
 
 test("unknown routes use structured API errors", async () => {
-  const router = createBackendRouter(createBackendConfig({ NODE_ENV: "test" }));
+  const router = createBackendRouter(
+    createBackendConfig({ NODE_ENV: "test", PROJECT_REGISTRY_FILE: "NUL" }),
+  );
   const response = await router({ method: "POST", url: "/missing" });
 
   assert.equal(response.statusCode, 404);

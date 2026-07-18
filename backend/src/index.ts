@@ -9,6 +9,12 @@ export {
   type ProjectAnalysisRequest,
   type ProjectAnalysisSummary,
 } from "./project-analysis.ts";
+export {
+  createFileProjectRegistry,
+  type ProjectRecord,
+  type ProjectRegistry,
+  type ProjectRegistrySnapshot,
+} from "./project-registry.ts";
 
 export const backendPackage = {
   name: "@legacylens/backend",

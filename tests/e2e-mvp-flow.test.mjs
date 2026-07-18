@@ -7,12 +7,17 @@ import {
   analyzeProject,
   createBackendConfig,
   createBackendRouter,
+  createFileProjectRegistry,
 } from "../backend/src/index.ts";
 
 let fixtureRoot;
+let registryRoot;
+let registryFile;
 
 test.before(async () => {
   fixtureRoot = await mkdtemp(join(tmpdir(), "legacylens-e2e-"));
+  registryRoot = await mkdtemp(join(tmpdir(), "legacylens-registry-"));
+  registryFile = join(registryRoot, "project-registry.json");
   await mkdir(join(fixtureRoot, "src"), { recursive: true });
   await mkdir(join(fixtureRoot, "dist"), { recursive: true });
 
@@ -35,6 +40,9 @@ test.after(async () => {
   if (fixtureRoot) {
     await rm(fixtureRoot, { force: true, recursive: true });
   }
+  if (registryRoot) {
+    await rm(registryRoot, { force: true, recursive: true });
+  }
 });
 
 test("analyzeProject creates a source-grounded inventory from parser and AI contracts", async () => {
@@ -44,6 +52,7 @@ test("analyzeProject creates a source-grounded inventory from parser and AI cont
   });
 
   assert.equal(analysis.projectName, "Legacy Billing");
+  assert.equal(analysis.projectId, "legacy-billing");
   assert.equal(analysis.fileCount, 3);
   assert.equal(analysis.analyzedFileCount, 3);
   assert.deepEqual(
@@ -59,8 +68,31 @@ test("analyzeProject creates a source-grounded inventory from parser and AI cont
   assert.equal(analysis.knowledgeChunks[1].source.path, "src/billing.ts");
 });
 
+test("file project registry persists and updates analysis summaries", async () => {
+  const registry = createFileProjectRegistry(registryFile);
+  const analysis = await analyzeProject({
+    projectName: "Legacy Billing",
+    sourcePath: fixtureRoot,
+    maxFiles: 2,
+  });
+
+  const saved = await registry.save(analysis);
+  const listed = await registry.list();
+  const loaded = await registry.get("legacy-billing");
+
+  assert.equal(saved.id, "legacy-billing");
+  assert.equal(listed.length, 1);
+  assert.equal(loaded.projectName, "Legacy Billing");
+  assert.equal(loaded.analyzedFileCount, 2);
+});
+
 test("project analysis route validates and returns the MVP analysis payload", async () => {
-  const router = createBackendRouter(createBackendConfig({ NODE_ENV: "test" }));
+  const router = createBackendRouter(
+    createBackendConfig({
+      NODE_ENV: "test",
+      PROJECT_REGISTRY_FILE: registryFile,
+    }),
+  );
   const response = await router({
     method: "POST",
     url: "/api/v1/projects/analyze",
@@ -72,13 +104,33 @@ test("project analysis route validates and returns the MVP analysis payload", as
   });
 
   assert.equal(response.statusCode, 200);
+  assert.equal(response.body.id, "legacy-billing");
   assert.equal(response.body.fileCount, 3);
   assert.equal(response.body.analyzedFileCount, 2);
   assert.equal(response.body.knowledgeChunks.length, 2);
+
+  const listResponse = await router({
+    method: "GET",
+    url: "/api/v1/projects",
+  });
+  const detailResponse = await router({
+    method: "GET",
+    url: "/api/v1/projects/legacy-billing",
+  });
+
+  assert.equal(listResponse.statusCode, 200);
+  assert.equal(listResponse.body.projects.length, 1);
+  assert.equal(detailResponse.statusCode, 200);
+  assert.equal(detailResponse.body.id, "legacy-billing");
 });
 
 test("project analysis route rejects invalid payloads with structured errors", async () => {
-  const router = createBackendRouter(createBackendConfig({ NODE_ENV: "test" }));
+  const router = createBackendRouter(
+    createBackendConfig({
+      NODE_ENV: "test",
+      PROJECT_REGISTRY_FILE: registryFile,
+    }),
+  );
   const response = await router({
     method: "POST",
     url: "/api/v1/projects/analyze",

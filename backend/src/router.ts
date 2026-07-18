@@ -7,8 +7,11 @@ import {
   analyzeProject,
   parseProjectAnalysisRequest,
 } from "./project-analysis.ts";
+import { createFileProjectRegistry } from "./project-registry.ts";
 
 export function createBackendRouter(config: BackendConfig) {
+  const projectRegistry = createFileProjectRegistry(config.registryFilePath);
+
   return async function route(request: HttpRequest): Promise<JsonResponse> {
     try {
       const method = request.method.toUpperCase();
@@ -33,7 +36,19 @@ export function createBackendRouter(config: BackendConfig) {
       if (method === "POST" && path === "/api/v1/projects/analyze") {
         const analysisRequest = parseProjectAnalysisRequest(request.body);
         const analysis = await analyzeProject(analysisRequest);
-        return jsonResponse(200, analysis);
+        const project = await projectRegistry.save(analysis);
+        return jsonResponse(200, project);
+      }
+
+      if (method === "GET" && path === "/api/v1/projects") {
+        const projects = await projectRegistry.list();
+        return jsonResponse(200, { projects });
+      }
+
+      const projectMatch = path.match(/^\/api\/v1\/projects\/([^/]+)$/);
+      if (method === "GET" && projectMatch?.[1]) {
+        const project = await projectRegistry.get(decodeURIComponent(projectMatch[1]));
+        return jsonResponse(200, project);
       }
 
       throw new BackendError("ROUTE_NOT_FOUND", "Route was not found.", {

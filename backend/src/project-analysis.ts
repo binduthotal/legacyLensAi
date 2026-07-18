@@ -13,6 +13,7 @@ export type ProjectAnalysisRequest = {
 };
 
 export type ProjectAnalysisSummary = {
+  readonly projectId: string;
   readonly projectName: string;
   readonly sourcePath: string;
   readonly fileCount: number;
@@ -82,6 +83,7 @@ export async function analyzeProject(
   );
 
   return {
+    projectId,
     projectName,
     sourcePath,
     fileCount: discoveredFiles.length,

@@ -29,7 +29,17 @@ POST /api/v1/projects/analyze
 
 Creates an in-memory analysis preview for a local source path. The route
 discovers source files, creates parser artifacts, converts them into AI
-knowledge chunk metadata, and returns the resulting inventory.
+knowledge chunk metadata, persists the summary to the project registry, and
+returns the resulting project record.
+
+### Project Registry
+
+```http
+GET /api/v1/projects
+GET /api/v1/projects/:projectId
+```
+
+Returns persisted project analysis records from the local registry.
 
 ## Error Shape
 

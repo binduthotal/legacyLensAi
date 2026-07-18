@@ -77,6 +77,14 @@ existing behavior.
 - Add integration tests and workflow validation.
 - Status: completed.
 
+### Module 8: Persistence and Project Registry
+
+- Persist project analysis summaries.
+- Add project list and detail API routes.
+- Show analyzed projects in the frontend.
+- Add registry integration tests.
+- Status: completed.
+
 ## Delivery Rules
 
 - Implement one module at a time.

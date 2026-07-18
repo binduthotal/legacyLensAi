@@ -2,6 +2,7 @@ export type BackendConfig = {
   readonly environment: "development" | "test" | "production";
   readonly host: string;
   readonly port: number;
+  readonly registryFilePath: string;
   readonly serviceName: string;
   readonly serviceVersion: string;
 };
@@ -18,6 +19,8 @@ export function createBackendConfig(env: EnvironmentInput = process.env): Backen
     environment,
     host: env.API_HOST ?? "127.0.0.1",
     port,
+    registryFilePath:
+      env.PROJECT_REGISTRY_FILE ?? ".legacylens/project-registry.json",
     serviceName: env.SERVICE_NAME ?? "legacylens-backend",
     serviceVersion: env.SERVICE_VERSION ?? "0.1.0",
   };

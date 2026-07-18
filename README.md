@@ -11,9 +11,10 @@ Deliver production-ready migrations that faithfully reproduce the original
 application's functionality, business logic, workflows, APIs, and user
 experience in the target technology stack.
 
-This repository is currently in **Module 7: End-to-End MVP Flow**. The backend,
-parser, AI contracts, and frontend now connect through a basic local project
-analysis workflow.
+This repository is currently in **Module 8: Persistence and Project Registry**.
+The backend, parser, AI contracts, and frontend connect through a local project
+analysis workflow, and analysis results are persisted in a file-backed project
+registry.
 
 ## Planned Capabilities
 
@@ -83,6 +84,7 @@ The project must not be generated in one pass.
 - [Module 5 AI Retrieval Foundation](docs/module-5-ai-retrieval-foundation.md)
 - [Module 6 Frontend Foundation](docs/module-6-frontend-foundation.md)
 - [Module 7 End-to-End MVP Flow](docs/module-7-end-to-end-mvp-flow.md)
+- [Module 8 Persistence and Project Registry](docs/module-8-project-registry.md)
 - [Architecture](docs/architecture.md)
 - [Migration Workflow](docs/migration-workflow.md)
 - [Testing Strategy](docs/testing-strategy.md)
@@ -91,7 +93,7 @@ The project must not be generated in one pass.
 
 ## Local Development
 
-Module 7 can be validated without installing dependencies:
+Module 8 can be validated without installing dependencies:
 
 ```bash
 npm.cmd run validate
@@ -126,6 +128,8 @@ Available endpoints:
 - `GET /ready`
 - `GET /api/v1/ready`
 - `POST /api/v1/projects/analyze`
+- `GET /api/v1/projects`
+- `GET /api/v1/projects/:projectId`
 
 After pnpm is installed, use the workspace commands:
 
