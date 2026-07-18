@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/run-workspaces.mjs build",
-    "dev": "node scripts/run-workspaces.mjs dev",
+    "dev": "node scripts/dev.mjs",
+    "dev:backend": "node backend/src/main.ts",
+    "dev:frontend": "node frontend/src/main.ts",
     "format": "node scripts/verify-format-config.mjs",
     "lint": "node scripts/run-workspaces.mjs lint",
     "test": "node --test tests/*.test.mjs",

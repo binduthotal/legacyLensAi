@@ -99,18 +99,24 @@ npm.cmd run validate
 Run the backend shell:
 
 ```bash
-npm.cmd run dev
+npm.cmd run dev:backend
 ```
 
 Run the frontend shell:
 
 ```bash
-node frontend/src/main.ts
+npm.cmd run dev:frontend
 ```
 
 The frontend listens on `http://127.0.0.1:3000` by default.
 
 The backend listens on `http://127.0.0.1:4000` by default.
+
+Run both services together:
+
+```bash
+npm.cmd run dev
+```
 
 Available endpoints:
 

@@ -19,19 +19,25 @@ framework dependencies yet.
 Start the backend:
 
 ```bash
-npm.cmd run dev
+npm.cmd run dev:backend
 ```
 
 Start the frontend:
 
 ```bash
-node frontend/src/main.ts
+npm.cmd run dev:frontend
 ```
 
 Open:
 
 ```text
 http://127.0.0.1:3000
+```
+
+Or run both services together:
+
+```bash
+npm.cmd run dev
 ```
 
 ## Validation
