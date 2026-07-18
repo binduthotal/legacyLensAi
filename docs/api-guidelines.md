@@ -19,6 +19,18 @@
 - Migration plans
 - Reports
 
+## Implemented API Routes
+
+### Project Analysis
+
+```http
+POST /api/v1/projects/analyze
+```
+
+Creates an in-memory analysis preview for a local source path. The route
+discovers source files, creates parser artifacts, converts them into AI
+knowledge chunk metadata, and returns the resulting inventory.
+
 ## Error Shape
 
 ```json

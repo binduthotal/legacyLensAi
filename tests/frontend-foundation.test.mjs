@@ -35,6 +35,14 @@ test("frontend shell contains required migration workspace sections", async () =
   assert.match(html, /Reports/);
 });
 
+test("frontend script posts project intake to the analysis API", async () => {
+  const script = await readFile(join(root, "frontend", "public", "app.js"), "utf8");
+
+  assert.match(script, /\/api\/v1\/projects\/analyze/);
+  assert.match(script, /method: "POST"/);
+  assert.match(script, /maxFiles: 25/);
+});
+
 test("resolveStaticAsset serves index and blocks missing files", () => {
   const publicRoot = join(root, "frontend", "public");
   const index = resolveStaticAsset(publicRoot, "/");

@@ -3,12 +3,20 @@ import { BackendError, toErrorResponse } from "./errors.ts";
 import { createHealthSnapshot } from "./health.ts";
 import type { HttpRequest, JsonResponse } from "./http.ts";
 import { jsonResponse } from "./http.ts";
+import {
+  analyzeProject,
+  parseProjectAnalysisRequest,
+} from "./project-analysis.ts";
 
 export function createBackendRouter(config: BackendConfig) {
-  return function route(request: HttpRequest): JsonResponse {
+  return async function route(request: HttpRequest): Promise<JsonResponse> {
     try {
       const method = request.method.toUpperCase();
       const path = new URL(request.url, "http://localhost").pathname;
+
+      if (method === "OPTIONS") {
+        return jsonResponse(204, undefined);
+      }
 
       if (method === "GET" && (path === "/health" || path === "/api/v1/health")) {
         return jsonResponse(200, createHealthSnapshot(config));
@@ -20,6 +28,12 @@ export function createBackendRouter(config: BackendConfig) {
           service: config.serviceName,
           version: config.serviceVersion,
         });
+      }
+
+      if (method === "POST" && path === "/api/v1/projects/analyze") {
+        const analysisRequest = parseProjectAnalysisRequest(request.body);
+        const analysis = await analyzeProject(analysisRequest);
+        return jsonResponse(200, analysis);
       }
 
       throw new BackendError("ROUTE_NOT_FOUND", "Route was not found.", {

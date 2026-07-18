@@ -23,13 +23,41 @@ async function refreshBackendStatus() {
   }
 }
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = new FormData(form);
   const projectName = formData.get("projectName");
   const sourcePath = formData.get("sourcePath");
 
-  formResult.textContent = `${projectName} is ready for analysis planning from ${sourcePath}.`;
+  formResult.textContent = "Analyzing project inventory...";
+
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/v1/projects/analyze`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        projectName,
+        sourcePath,
+        maxFiles: 25,
+      }),
+    });
+
+    const payload = await response.json();
+
+    if (!response.ok) {
+      throw new Error(payload.error?.message ?? "Analysis failed.");
+    }
+
+    const languages = payload.languages
+      .map((item) => `${item.language} (${item.fileCount})`)
+      .join(", ");
+
+    formResult.textContent = `${payload.projectName}: ${payload.fileCount} files discovered, ${payload.analyzedFileCount} analyzed. Languages: ${languages}.`;
+  } catch (error) {
+    formResult.textContent = error.message;
+  }
 });
 
 refreshBackendStatus();

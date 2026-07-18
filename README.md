@@ -11,9 +11,9 @@ Deliver production-ready migrations that faithfully reproduce the original
 application's functionality, business logic, workflows, APIs, and user
 experience in the target technology stack.
 
-This repository is currently in **Module 6: Frontend Foundation**. The backend
-has a minimal API shell, the parser and AI layers expose source-grounded
-contracts, and the frontend has a runnable workspace shell.
+This repository is currently in **Module 7: End-to-End MVP Flow**. The backend,
+parser, AI contracts, and frontend now connect through a basic local project
+analysis workflow.
 
 ## Planned Capabilities
 
@@ -82,6 +82,7 @@ The project must not be generated in one pass.
 - [Module 4 Parser Foundation](docs/module-4-parser-foundation.md)
 - [Module 5 AI Retrieval Foundation](docs/module-5-ai-retrieval-foundation.md)
 - [Module 6 Frontend Foundation](docs/module-6-frontend-foundation.md)
+- [Module 7 End-to-End MVP Flow](docs/module-7-end-to-end-mvp-flow.md)
 - [Architecture](docs/architecture.md)
 - [Migration Workflow](docs/migration-workflow.md)
 - [Testing Strategy](docs/testing-strategy.md)
@@ -90,7 +91,7 @@ The project must not be generated in one pass.
 
 ## Local Development
 
-Module 6 can be validated without installing dependencies:
+Module 7 can be validated without installing dependencies:
 
 ```bash
 npm.cmd run validate
@@ -124,6 +125,7 @@ Available endpoints:
 - `GET /api/v1/health`
 - `GET /ready`
 - `GET /api/v1/ready`
+- `POST /api/v1/projects/analyze`
 
 After pnpm is installed, use the workspace commands:
 

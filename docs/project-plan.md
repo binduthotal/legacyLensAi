@@ -75,6 +75,7 @@ existing behavior.
 
 - Connect ingestion, parsing, indexing, and question answering.
 - Add integration tests and workflow validation.
+- Status: completed.
 
 ## Delivery Rules
 

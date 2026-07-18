@@ -21,7 +21,7 @@ test("backend config validates environment and port", () => {
   assert.throws(() => createBackendConfig({ PORT: "70000" }), /Invalid API port/);
 });
 
-test("health route returns source-independent service status", () => {
+test("health route returns source-independent service status", async () => {
   const router = createBackendRouter(
     createBackendConfig({
       NODE_ENV: "test",
@@ -30,7 +30,7 @@ test("health route returns source-independent service status", () => {
     }),
   );
 
-  const response = router({ method: "GET", url: "/api/v1/health" });
+  const response = await router({ method: "GET", url: "/api/v1/health" });
 
   assert.equal(response.statusCode, 200);
   assert.equal(response.body.status, "ok");
@@ -40,9 +40,9 @@ test("health route returns source-independent service status", () => {
   assert.match(response.body.timestamp, /^\d{4}-\d{2}-\d{2}T/);
 });
 
-test("ready route returns readiness payload", () => {
+test("ready route returns readiness payload", async () => {
   const router = createBackendRouter(createBackendConfig({ NODE_ENV: "test" }));
-  const response = router({ method: "GET", url: "/ready" });
+  const response = await router({ method: "GET", url: "/ready" });
 
   assert.equal(response.statusCode, 200);
   assert.deepEqual(response.body, {
@@ -52,9 +52,9 @@ test("ready route returns readiness payload", () => {
   });
 });
 
-test("unknown routes use structured API errors", () => {
+test("unknown routes use structured API errors", async () => {
   const router = createBackendRouter(createBackendConfig({ NODE_ENV: "test" }));
-  const response = router({ method: "POST", url: "/missing" });
+  const response = await router({ method: "POST", url: "/missing" });
 
   assert.equal(response.statusCode, 404);
   assert.deepEqual(response.body, {
