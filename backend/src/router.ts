@@ -8,6 +8,10 @@ import {
   parseProjectAnalysisRequest,
 } from "./project-analysis.ts";
 import { previewProjectIntake } from "./project-intake.ts";
+import {
+  answerProjectQuestion,
+  parseProjectQuestionRequest,
+} from "./project-question.ts";
 import { createFileProjectRegistry } from "./project-registry.ts";
 import { readProjectSourceFile } from "./source-file.ts";
 
@@ -51,6 +55,14 @@ export function createBackendRouter(config: BackendConfig) {
       if (method === "GET" && path === "/api/v1/projects") {
         const projects = await projectRegistry.list();
         return jsonResponse(200, { projects });
+      }
+
+      const questionMatch = path.match(/^\/api\/v1\/projects\/([^/]+)\/questions$/);
+      if (method === "POST" && questionMatch?.[1]) {
+        const project = await projectRegistry.get(decodeURIComponent(questionMatch[1]));
+        const questionRequest = parseProjectQuestionRequest(request.body);
+        const answer = await answerProjectQuestion(project, questionRequest);
+        return jsonResponse(200, answer);
       }
 
       const fileMatch = path.match(/^\/api\/v1\/projects\/([^/]+)\/files$/);

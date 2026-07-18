@@ -110,6 +110,14 @@ existing behavior.
 - Link file inventory rows to source content.
 - Status: completed.
 
+### Module 12: AI Question Answering UI
+
+- Add project-scoped Q&A API route.
+- Reconstruct source-grounded chunks from analyzed files.
+- Return deterministic answers with citations.
+- Add frontend Q&A form for selected projects.
+- Status: completed.
+
 ## Delivery Rules
 
 - Implement one module at a time.

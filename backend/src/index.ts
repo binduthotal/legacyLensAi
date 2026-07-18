@@ -18,6 +18,12 @@ export {
   type ProjectIntakeRequest,
 } from "./project-intake.ts";
 export {
+  answerProjectQuestion,
+  parseProjectQuestionRequest,
+  type ProjectQuestionAnswer,
+  type ProjectQuestionRequest,
+} from "./project-question.ts";
+export {
   createFileProjectRegistry,
   type ProjectRecord,
   type ProjectRegistry,

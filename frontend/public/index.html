@@ -20,6 +20,7 @@
         <a href="#projects">Projects</a>
         <a href="#analysis">Analysis</a>
         <a href="#knowledge">Knowledge</a>
+        <a href="#questions">Q&A</a>
         <a href="#reports">Reports</a>
       </nav>
     </aside>
@@ -163,6 +164,26 @@
             AI answers must cite source context and identify missing evidence
             instead of inventing behavior.
           </p>
+        </section>
+
+        <section class="panel" id="questions">
+          <p class="eyebrow">AI Q&A</p>
+          <h2>Ask about the selected project</h2>
+          <form id="question-form">
+            <label>
+              Question
+              <textarea
+                name="question"
+                rows="4"
+                placeholder="How are invoices approved?"
+                required
+              ></textarea>
+            </label>
+            <button type="submit">Ask with citations</button>
+          </form>
+          <div id="question-answer" class="answer-box">
+            Select a project and ask a source-grounded question.
+          </div>
         </section>
 
         <section class="panel" id="reports">

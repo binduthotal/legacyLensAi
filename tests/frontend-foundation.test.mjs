@@ -39,6 +39,9 @@ test("frontend shell contains required migration workspace sections", async () =
   assert.match(html, /Source Viewer/);
   assert.match(html, /source-content/);
   assert.match(html, /Knowledge Rules/);
+  assert.match(html, /AI Q&A/);
+  assert.match(html, /question-form/);
+  assert.match(html, /question-answer/);
   assert.match(html, /Reports/);
 });
 
@@ -54,6 +57,8 @@ test("frontend script posts project intake to the analysis API", async () => {
   assert.match(script, /formatSourceLabel/);
   assert.match(script, /loadSourceFile/);
   assert.match(script, /data-file-path/);
+  assert.match(script, /\/api\/v1\/projects\/\$\{selectedProjectId\}\/questions/);
+  assert.match(script, /Ask with citations|questionAnswer/);
   assert.match(script, /escapeHtml/);
 });
 

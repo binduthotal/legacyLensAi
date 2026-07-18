@@ -133,6 +133,21 @@ test("project analysis route validates and returns the MVP analysis payload", as
   assert.equal(fileResponse.body.path, "src/billing.ts");
   assert.equal(fileResponse.body.citationLabel, "src/billing.ts:1-4");
   assert.match(fileResponse.body.content, /approveInvoice/);
+
+  const questionResponse = await router({
+    method: "POST",
+    url: "/api/v1/projects/legacy-billing/questions",
+    body: {
+      question: "How are invoices approved?",
+      maxResults: 2,
+    },
+  });
+
+  assert.equal(questionResponse.statusCode, 200);
+  assert.equal(questionResponse.body.projectId, "legacy-billing");
+  assert.equal(questionResponse.body.confidence, "source-grounded");
+  assert.match(questionResponse.body.answer, /approved after account validation/);
+  assert.deepEqual(questionResponse.body.citations, ["README.md:1-4"]);
 });
 
 test("project file route rejects files outside the analyzed inventory", async () => {
@@ -150,6 +165,26 @@ test("project file route rejects files outside the analyzed inventory", async ()
 
   assert.equal(response.statusCode, 400);
   assert.equal(response.body.error.code, "INVALID_SOURCE_FILE_PATH");
+});
+
+test("project question route rejects empty questions with structured errors", async () => {
+  const router = createBackendRouter(
+    createBackendConfig({
+      NODE_ENV: "test",
+      PROJECT_REGISTRY_FILE: registryFile,
+    }),
+  );
+
+  const response = await router({
+    method: "POST",
+    url: "/api/v1/projects/legacy-billing/questions",
+    body: {
+      question: "   ",
+    },
+  });
+
+  assert.equal(response.statusCode, 400);
+  assert.equal(response.body.error.code, "INVALID_PROJECT_QUESTION");
 });
 
 test("project analysis route rejects invalid payloads with structured errors", async () => {

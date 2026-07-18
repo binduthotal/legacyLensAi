@@ -12,6 +12,8 @@ const fileInventory = document.querySelector("#file-inventory");
 const sourceTitle = document.querySelector("#source-title");
 const sourceCitation = document.querySelector("#source-citation");
 const sourceContent = document.querySelector("#source-content");
+const questionForm = document.querySelector("#question-form");
+const questionAnswer = document.querySelector("#question-answer");
 
 const apiBaseUrl = "http://127.0.0.1:4000";
 let selectedProjectId;
@@ -120,6 +122,51 @@ fileInventory.addEventListener("click", (event) => {
   }
 
   loadSourceFile(selectedProjectId, button.dataset.filePath);
+});
+
+questionForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!selectedProjectId) {
+    questionAnswer.textContent = "Select a project before asking a question.";
+    return;
+  }
+
+  const formData = new FormData(questionForm);
+  const question = formData.get("question");
+  questionAnswer.textContent = "Looking for source evidence...";
+
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/v1/projects/${selectedProjectId}/questions`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          question,
+          maxResults: 3,
+        }),
+      },
+    );
+    const payload = await response.json();
+
+    if (!response.ok) {
+      throw new Error(payload.error?.message ?? "Question answering failed.");
+    }
+
+    const citations =
+      payload.citations.length > 0
+        ? `<ul>${payload.citations
+            .map((citation) => `<li>${escapeHtml(citation)}</li>`)
+            .join("")}</ul>`
+        : "<p>No source citations returned.</p>";
+
+    questionAnswer.innerHTML = `<p>${escapeHtml(payload.answer)}</p>${citations}`;
+  } catch (error) {
+    questionAnswer.textContent = error.message;
+  }
 });
 
 async function loadSourceFile(projectId, filePath) {

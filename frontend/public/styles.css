@@ -174,7 +174,8 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   padding: 11px 12px;
   border: 1px solid var(--border);
@@ -184,9 +185,15 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: 3px solid rgba(35, 100, 170, 0.18);
   border-color: var(--accent);
+}
+
+textarea {
+  min-height: 112px;
+  resize: vertical;
 }
 
 .form-grid {
@@ -445,6 +452,25 @@ code {
 
 .project-detail {
   margin-top: 12px;
+}
+
+.answer-box {
+  display: grid;
+  gap: 10px;
+  min-height: 120px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-muted);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.answer-box ul {
+  padding-left: 18px;
+  margin: 0;
 }
 
 @media (max-width: 840px) {
