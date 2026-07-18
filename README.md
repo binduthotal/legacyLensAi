@@ -11,9 +11,9 @@ Deliver production-ready migrations that faithfully reproduce the original
 application's functionality, business logic, workflows, APIs, and user
 experience in the target technology stack.
 
-This repository is currently in **Module 10: Project Detail and Source Inventory
-UI**. The frontend can now inspect analyzed projects with language breakdowns,
-file inventory, and source chunk previews.
+This repository is currently in **Module 11: Source File Viewer and Citation
+Navigation**. The frontend can inspect analyzed projects, open source files, and
+view citation labels backed by the project registry.
 
 ## Planned Capabilities
 
@@ -86,6 +86,7 @@ The project must not be generated in one pass.
 - [Module 8 Persistence and Project Registry](docs/module-8-project-registry.md)
 - [Module 9 Repository Upload and File Intake](docs/module-9-repository-file-intake.md)
 - [Module 10 Project Detail and Source Inventory UI](docs/module-10-project-detail-source-inventory.md)
+- [Module 11 Source File Viewer and Citation Navigation](docs/module-11-source-file-viewer.md)
 - [Architecture](docs/architecture.md)
 - [Migration Workflow](docs/migration-workflow.md)
 - [Testing Strategy](docs/testing-strategy.md)
@@ -94,7 +95,7 @@ The project must not be generated in one pass.
 
 ## Local Development
 
-Module 10 can be validated without installing dependencies:
+Module 11 can be validated without installing dependencies:
 
 ```bash
 npm.cmd run validate
@@ -132,6 +133,7 @@ Available endpoints:
 - `POST /api/v1/projects/intake/preview`
 - `GET /api/v1/projects`
 - `GET /api/v1/projects/:projectId`
+- `GET /api/v1/projects/:projectId/files?path=relative/path`
 
 After pnpm is installed, use the workspace commands:
 

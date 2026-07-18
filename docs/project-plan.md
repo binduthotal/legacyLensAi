@@ -102,6 +102,14 @@ existing behavior.
 - Add source chunk preview with citations.
 - Status: completed.
 
+### Module 11: Source File Viewer and Citation Navigation
+
+- Add source file detail API route.
+- Guard file paths against traversal.
+- Add frontend source viewer.
+- Link file inventory rows to source content.
+- Status: completed.
+
 ## Delivery Rules
 
 - Implement one module at a time.

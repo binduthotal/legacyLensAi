@@ -123,6 +123,33 @@ test("project analysis route validates and returns the MVP analysis payload", as
   assert.equal(listResponse.body.projects.length, 1);
   assert.equal(detailResponse.statusCode, 200);
   assert.equal(detailResponse.body.id, "legacy-billing");
+
+  const fileResponse = await router({
+    method: "GET",
+    url: "/api/v1/projects/legacy-billing/files?path=src%2Fbilling.ts",
+  });
+
+  assert.equal(fileResponse.statusCode, 200);
+  assert.equal(fileResponse.body.path, "src/billing.ts");
+  assert.equal(fileResponse.body.citationLabel, "src/billing.ts:1-4");
+  assert.match(fileResponse.body.content, /approveInvoice/);
+});
+
+test("project file route rejects files outside the analyzed inventory", async () => {
+  const router = createBackendRouter(
+    createBackendConfig({
+      NODE_ENV: "test",
+      PROJECT_REGISTRY_FILE: registryFile,
+    }),
+  );
+
+  const response = await router({
+    method: "GET",
+    url: "/api/v1/projects/legacy-billing/files?path=..%2Fsecret.txt",
+  });
+
+  assert.equal(response.statusCode, 400);
+  assert.equal(response.body.error.code, "INVALID_SOURCE_FILE_PATH");
 });
 
 test("project analysis route rejects invalid payloads with structured errors", async () => {

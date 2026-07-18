@@ -23,6 +23,10 @@ export {
   type ProjectRegistry,
   type ProjectRegistrySnapshot,
 } from "./project-registry.ts";
+export {
+  readProjectSourceFile,
+  type SourceFileDetail,
+} from "./source-file.ts";
 
 export const backendPackage = {
   name: "@legacylens/backend",

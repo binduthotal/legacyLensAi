@@ -9,8 +9,12 @@ const analysisUpdated = document.querySelector("#analysis-updated");
 const languageBreakdown = document.querySelector("#language-breakdown");
 const chunkPreview = document.querySelector("#chunk-preview");
 const fileInventory = document.querySelector("#file-inventory");
+const sourceTitle = document.querySelector("#source-title");
+const sourceCitation = document.querySelector("#source-citation");
+const sourceContent = document.querySelector("#source-content");
 
 const apiBaseUrl = "http://127.0.0.1:4000";
+let selectedProjectId;
 
 async function refreshBackendStatus() {
   try {
@@ -70,6 +74,7 @@ async function loadProjectDetail(projectId) {
 }
 
 function renderProjectDetail(project) {
+  selectedProjectId = project.id;
   const languages = project.languages
     .map((item) => `${item.language} (${item.fileCount})`)
     .join(", ");
@@ -94,7 +99,7 @@ function renderProjectDetail(project) {
 
   fileInventory.innerHTML = project.files
     .map((file) => {
-      return `<tr><td>${escapeHtml(file.path)}</td><td>${escapeHtml(file.language)}</td><td>${file.lineCount}</td><td>${formatBytes(file.sizeBytes)}</td></tr>`;
+      return `<tr><td><button type="button" class="file-link" data-file-path="${escapeHtml(file.path)}">${escapeHtml(file.path)}</button></td><td>${escapeHtml(file.language)}</td><td>${file.lineCount}</td><td>${formatBytes(file.sizeBytes)}</td></tr>`;
     })
     .join("");
 }
@@ -107,6 +112,36 @@ projectRegistry.addEventListener("click", (event) => {
 
   loadProjectDetail(button.dataset.projectId);
 });
+
+fileInventory.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-file-path]");
+  if (!button || !selectedProjectId) {
+    return;
+  }
+
+  loadSourceFile(selectedProjectId, button.dataset.filePath);
+});
+
+async function loadSourceFile(projectId, filePath) {
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/v1/projects/${projectId}/files?path=${encodeURIComponent(filePath)}`,
+    );
+    const payload = await response.json();
+
+    if (!response.ok) {
+      throw new Error(payload.error?.message ?? "Source file load failed.");
+    }
+
+    sourceTitle.textContent = payload.path;
+    sourceCitation.textContent = payload.citationLabel;
+    sourceContent.textContent = payload.content;
+  } catch (error) {
+    sourceTitle.textContent = "Source Viewer";
+    sourceCitation.textContent = "Unable to load source.";
+    sourceContent.textContent = error.message;
+  }
+}
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();

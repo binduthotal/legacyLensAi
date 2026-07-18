@@ -9,6 +9,7 @@ import {
 } from "./project-analysis.ts";
 import { previewProjectIntake } from "./project-intake.ts";
 import { createFileProjectRegistry } from "./project-registry.ts";
+import { readProjectSourceFile } from "./source-file.ts";
 
 export function createBackendRouter(config: BackendConfig) {
   const projectRegistry = createFileProjectRegistry(config.registryFilePath);
@@ -50,6 +51,17 @@ export function createBackendRouter(config: BackendConfig) {
       if (method === "GET" && path === "/api/v1/projects") {
         const projects = await projectRegistry.list();
         return jsonResponse(200, { projects });
+      }
+
+      const fileMatch = path.match(/^\/api\/v1\/projects\/([^/]+)\/files$/);
+      if (method === "GET" && fileMatch?.[1]) {
+        const url = new URL(request.url, "http://localhost");
+        const project = await projectRegistry.get(decodeURIComponent(fileMatch[1]));
+        const file = await readProjectSourceFile(
+          project,
+          url.searchParams.get("path") ?? undefined,
+        );
+        return jsonResponse(200, file);
       }
 
       const projectMatch = path.match(/^\/api\/v1\/projects\/([^/]+)$/);
