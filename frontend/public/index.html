@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LegacyLens AI</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">LL</span>
+        <div>
+          <strong>LegacyLens AI</strong>
+          <span>Migration workspace</span>
+        </div>
+      </div>
+      <nav>
+        <a class="active" href="#overview">Overview</a>
+        <a href="#projects">Projects</a>
+        <a href="#analysis">Analysis</a>
+        <a href="#knowledge">Knowledge</a>
+        <a href="#reports">Reports</a>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Module 6</p>
+          <h1>Frontend Foundation</h1>
+        </div>
+        <div id="backend-status" class="status-pill" data-state="checking">
+          Checking backend
+        </div>
+      </header>
+
+      <section class="workspace-grid" id="overview" aria-label="Workspace summary">
+        <article class="panel project-intake">
+          <div>
+            <p class="eyebrow">Project Intake</p>
+            <h2>Register a legacy codebase</h2>
+          </div>
+          <form id="project-form">
+            <label>
+              Project name
+              <input
+                name="projectName"
+                type="text"
+                placeholder="Claims Processing Legacy"
+                required
+              />
+            </label>
+            <label>
+              Source path
+              <input
+                name="sourcePath"
+                type="text"
+                placeholder="D:\projects\legacy-app"
+                required
+              />
+            </label>
+            <button type="submit">Queue analysis preview</button>
+          </form>
+          <p id="form-result" class="muted">No project queued yet.</p>
+        </article>
+
+        <section class="panel" id="projects">
+          <p class="eyebrow">Project Status</p>
+          <div class="status-list">
+            <div>
+              <span>Backend API</span>
+              <strong id="api-state">Checking</strong>
+            </div>
+            <div>
+              <span>Parser Foundation</span>
+              <strong>Ready</strong>
+            </div>
+            <div>
+              <span>AI Retrieval Contracts</span>
+              <strong>Ready</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel wide" id="analysis">
+          <p class="eyebrow">Analysis Pipeline</p>
+          <ol class="pipeline">
+            <li><strong>Discover</strong><span>Files and languages</span></li>
+            <li><strong>Artifact</strong><span>Source content and metadata</span></li>
+            <li><strong>Ground</strong><span>Chunks, retrieval, citations</span></li>
+            <li><strong>Review</strong><span>Migration-ready knowledge</span></li>
+          </ol>
+        </section>
+
+        <section class="panel" id="knowledge">
+          <p class="eyebrow">Knowledge Rules</p>
+          <p>
+            AI answers must cite source context and identify missing evidence
+            instead of inventing behavior.
+          </p>
+        </section>
+
+        <section class="panel" id="reports">
+          <p class="eyebrow">Reports</p>
+          <ul class="report-list">
+            <li>Architecture summary</li>
+            <li>Migration notes</li>
+            <li>Testing report</li>
+          </ul>
+        </section>
+      </section>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

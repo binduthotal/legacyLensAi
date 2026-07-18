@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import {
@@ -8,10 +9,10 @@ import {
   discoverSourceFiles,
 } from "../parser/src/index.ts";
 
-const fixtureRoot = join(process.cwd(), "sample_projects", "parser_foundation_fixture");
+let fixtureRoot;
 
 test.before(async () => {
-  await rm(fixtureRoot, { force: true, recursive: true });
+  fixtureRoot = await mkdtemp(join(tmpdir(), "legacylens-parser-"));
   await mkdir(join(fixtureRoot, "src"), { recursive: true });
   await mkdir(join(fixtureRoot, "node_modules", "ignored"), { recursive: true });
 
@@ -34,7 +35,9 @@ test.before(async () => {
 });
 
 test.after(async () => {
-  await rm(fixtureRoot, { force: true, recursive: true });
+  if (fixtureRoot) {
+    await rm(fixtureRoot, { force: true, recursive: true });
+  }
 });
 
 test("detectLanguage identifies common legacy project file types", () => {

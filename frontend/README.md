@@ -10,4 +10,10 @@ Planned responsibilities:
 - Architecture and dependency visualization.
 - Migration reports and review workflows.
 
-No feature implementation has been added in Module 1.
+Module 6 adds the first runnable frontend foundation:
+
+- Static operational workspace shell.
+- Project intake form for analysis planning.
+- Backend health indicator.
+- Analysis pipeline, knowledge rules, and report placeholders.
+- Dependency-free static server.

@@ -69,6 +69,7 @@ existing behavior.
 - Create the web application shell.
 - Add project upload/indexing views.
 - Add layout, navigation, and basic state management.
+- Status: completed.
 
 ### Module 7: End-to-End MVP Flow
 

@@ -11,9 +11,9 @@ Deliver production-ready migrations that faithfully reproduce the original
 application's functionality, business logic, workflows, APIs, and user
 experience in the target technology stack.
 
-This repository is currently in **Module 5: AI Retrieval Foundation**. The
-backend has a minimal dependency-free API shell, the parser can create source
-artifacts, and the AI layer now defines source-grounded retrieval contracts.
+This repository is currently in **Module 6: Frontend Foundation**. The backend
+has a minimal API shell, the parser and AI layers expose source-grounded
+contracts, and the frontend has a runnable workspace shell.
 
 ## Planned Capabilities
 
@@ -81,6 +81,7 @@ The project must not be generated in one pass.
 - [Module 3 Backend API Foundation](docs/module-3-backend-api-foundation.md)
 - [Module 4 Parser Foundation](docs/module-4-parser-foundation.md)
 - [Module 5 AI Retrieval Foundation](docs/module-5-ai-retrieval-foundation.md)
+- [Module 6 Frontend Foundation](docs/module-6-frontend-foundation.md)
 - [Architecture](docs/architecture.md)
 - [Migration Workflow](docs/migration-workflow.md)
 - [Testing Strategy](docs/testing-strategy.md)
@@ -89,7 +90,7 @@ The project must not be generated in one pass.
 
 ## Local Development
 
-Module 5 can be validated without installing dependencies:
+Module 6 can be validated without installing dependencies:
 
 ```bash
 npm.cmd run validate
@@ -100,6 +101,14 @@ Run the backend shell:
 ```bash
 npm.cmd run dev
 ```
+
+Run the frontend shell:
+
+```bash
+node frontend/src/main.ts
+```
+
+The frontend listens on `http://127.0.0.1:3000` by default.
 
 The backend listens on `http://127.0.0.1:4000` by default.
 
