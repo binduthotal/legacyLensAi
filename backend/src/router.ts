@@ -7,6 +7,7 @@ import {
   analyzeProject,
   parseProjectAnalysisRequest,
 } from "./project-analysis.ts";
+import { previewProjectIntake } from "./project-intake.ts";
 import { createFileProjectRegistry } from "./project-registry.ts";
 
 export function createBackendRouter(config: BackendConfig) {
@@ -38,6 +39,12 @@ export function createBackendRouter(config: BackendConfig) {
         const analysis = await analyzeProject(analysisRequest);
         const project = await projectRegistry.save(analysis);
         return jsonResponse(200, project);
+      }
+
+      if (method === "POST" && path === "/api/v1/projects/intake/preview") {
+        const intakeRequest = parseProjectAnalysisRequest(request.body);
+        const preview = await previewProjectIntake(intakeRequest);
+        return jsonResponse(200, preview);
       }
 
       if (method === "GET" && path === "/api/v1/projects") {

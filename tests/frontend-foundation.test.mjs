@@ -31,6 +31,8 @@ test("frontend shell contains required migration workspace sections", async () =
   assert.match(html, /LegacyLens AI/);
   assert.match(html, /Project Intake/);
   assert.match(html, /Project Registry/);
+  assert.match(html, /Max files/);
+  assert.match(html, /Max file size/);
   assert.match(html, /Analysis Pipeline/);
   assert.match(html, /Knowledge Rules/);
   assert.match(html, /Reports/);
@@ -40,9 +42,10 @@ test("frontend script posts project intake to the analysis API", async () => {
   const script = await readFile(join(root, "frontend", "public", "app.js"), "utf8");
 
   assert.match(script, /\/api\/v1\/projects\/analyze/);
+  assert.match(script, /\/api\/v1\/projects\/intake\/preview/);
   assert.match(script, /\/api\/v1\/projects/);
   assert.match(script, /method: "POST"/);
-  assert.match(script, /maxFiles: 25/);
+  assert.match(script, /maxFileSizeBytes/);
 });
 
 test("resolveStaticAsset serves index and blocks missing files", () => {

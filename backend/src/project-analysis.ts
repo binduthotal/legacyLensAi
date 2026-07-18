@@ -1,16 +1,16 @@
 import { createKnowledgeChunk, type KnowledgeChunk } from "../../ai/src/index.ts";
 import {
   createSourceArtifact,
-  discoverSourceFiles,
   type DiscoveredSourceFile,
 } from "../../parser/src/index.ts";
 import { BackendError } from "./errors.ts";
+import {
+  discoverIntakeFiles,
+  validateProjectIntake,
+  type ProjectIntakeRequest,
+} from "./project-intake.ts";
 
-export type ProjectAnalysisRequest = {
-  readonly projectName: string;
-  readonly sourcePath: string;
-  readonly maxFiles?: number;
-};
+export type ProjectAnalysisRequest = ProjectIntakeRequest;
 
 export type ProjectAnalysisSummary = {
   readonly projectId: string;
@@ -37,33 +37,11 @@ export type ProjectAnalysisSummary = {
 export async function analyzeProject(
   request: ProjectAnalysisRequest,
 ): Promise<ProjectAnalysisSummary> {
-  const projectName = request.projectName.trim();
-  const sourcePath = request.sourcePath.trim();
-  const maxFiles = request.maxFiles ?? 50;
-
-  if (projectName.length === 0) {
-    throw new BackendError("INVALID_PROJECT_NAME", "Project name is required.", {
-      statusCode: 400,
-    });
-  }
-
-  if (sourcePath.length === 0) {
-    throw new BackendError("INVALID_SOURCE_PATH", "Source path is required.", {
-      statusCode: 400,
-    });
-  }
-
-  if (!Number.isInteger(maxFiles) || maxFiles < 1 || maxFiles > 500) {
-    throw new BackendError("INVALID_MAX_FILES", "maxFiles must be from 1 to 500.", {
-      statusCode: 400,
-      details: { maxFiles },
-    });
-  }
-
-  const discoveredFiles = await discoverSourceFiles(sourcePath);
-  const selectedFiles = discoveredFiles.slice(0, maxFiles);
+  const intake = await validateProjectIntake(request);
+  const discoveredFiles = await discoverIntakeFiles(intake);
+  const selectedFiles = discoveredFiles.slice(0, intake.maxFiles);
   const artifacts = await Promise.all(selectedFiles.map(createSourceArtifact));
-  const projectId = slugify(projectName);
+  const projectId = slugify(intake.projectName);
 
   const knowledgeChunks = artifacts.map((artifact, index) =>
     createKnowledgeChunk({
@@ -77,15 +55,15 @@ export async function analyzeProject(
       },
       language: artifact.language,
       metadata: {
-        sourcePath,
+        sourcePath: intake.realSourcePath,
       },
     }),
   );
 
   return {
     projectId,
-    projectName,
-    sourcePath,
+    projectName: intake.projectName,
+    sourcePath: intake.realSourcePath,
     fileCount: discoveredFiles.length,
     analyzedFileCount: artifacts.length,
     languages: summarizeLanguages(discoveredFiles),
@@ -130,10 +108,24 @@ export function parseProjectAnalysisRequest(body: unknown): ProjectAnalysisReque
     });
   }
 
+  if (
+    body.maxFileSizeBytes !== undefined &&
+    typeof body.maxFileSizeBytes !== "number"
+  ) {
+    throw new BackendError(
+      "INVALID_MAX_FILE_SIZE",
+      "maxFileSizeBytes must be a number.",
+      {
+        statusCode: 400,
+      },
+    );
+  }
+
   return {
     projectName: body.projectName,
     sourcePath: body.sourcePath,
     maxFiles: body.maxFiles,
+    maxFileSizeBytes: body.maxFileSizeBytes,
   };
 }
 

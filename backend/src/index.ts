@@ -10,6 +10,14 @@ export {
   type ProjectAnalysisSummary,
 } from "./project-analysis.ts";
 export {
+  discoverIntakeFiles,
+  previewProjectIntake,
+  validateProjectIntake,
+  type ProjectIntake,
+  type ProjectIntakePreview,
+  type ProjectIntakeRequest,
+} from "./project-intake.ts";
+export {
   createFileProjectRegistry,
   type ProjectRecord,
   type ProjectRegistry,

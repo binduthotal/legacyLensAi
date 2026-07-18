@@ -85,6 +85,15 @@ existing behavior.
 - Add registry integration tests.
 - Status: completed.
 
+### Module 9: Repository Upload and File Intake
+
+- Add project intake validation.
+- Add source path existence and directory checks.
+- Add file count and file size limits.
+- Add intake preview API.
+- Improve frontend intake controls and project detail display.
+- Status: completed.
+
 ## Delivery Rules
 
 - Implement one module at a time.

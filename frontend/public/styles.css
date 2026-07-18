@@ -150,7 +150,8 @@ label {
   font-weight: 700;
 }
 
-input {
+input,
+select {
   width: 100%;
   padding: 11px 12px;
   border: 1px solid var(--border);
@@ -159,9 +160,16 @@ input {
   font: inherit;
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: 3px solid rgba(35, 100, 170, 0.18);
   border-color: var(--accent);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 button {
@@ -271,7 +279,8 @@ button:hover {
   list-style: none;
 }
 
-.project-registry li {
+.project-registry li,
+.project-detail {
   display: grid;
   gap: 4px;
   padding: 11px 12px;
@@ -282,12 +291,27 @@ button:hover {
   font-size: 14px;
 }
 
+.project-registry button {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
 .project-registry strong {
   color: var(--text);
 }
 
 .project-registry span {
   color: var(--muted);
+}
+
+.project-detail {
+  margin-top: 12px;
 }
 
 @media (max-width: 840px) {
@@ -301,7 +325,8 @@ button:hover {
 
   .topbar,
   .workspace-grid,
-  .pipeline {
+  .pipeline,
+  .form-grid {
     grid-template-columns: 1fr;
   }
 

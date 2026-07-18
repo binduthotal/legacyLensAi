@@ -100,6 +100,7 @@ test("project analysis route validates and returns the MVP analysis payload", as
       projectName: "Legacy Billing",
       sourcePath: fixtureRoot,
       maxFiles: 2,
+      maxFileSizeBytes: 1024 * 1024,
     },
   });
 

@@ -32,6 +32,15 @@ discovers source files, creates parser artifacts, converts them into AI
 knowledge chunk metadata, persists the summary to the project registry, and
 returns the resulting project record.
 
+### Project Intake Preview
+
+```http
+POST /api/v1/projects/intake/preview
+```
+
+Validates a local source path, applies file count and file size limits, and
+returns a preview of the files that would be analyzed.
+
 ### Project Registry
 
 ```http
