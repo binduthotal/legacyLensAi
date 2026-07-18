@@ -11,10 +11,9 @@ Deliver production-ready migrations that faithfully reproduce the original
 application's functionality, business logic, workflows, APIs, and user
 experience in the target technology stack.
 
-This repository is currently in **Module 9: Repository Upload and File Intake**.
-The backend validates local project intake, applies file limits, previews source
-files, persists analysis results, and the frontend exposes the safer intake
-workflow.
+This repository is currently in **Module 10: Project Detail and Source Inventory
+UI**. The frontend can now inspect analyzed projects with language breakdowns,
+file inventory, and source chunk previews.
 
 ## Planned Capabilities
 
@@ -86,6 +85,7 @@ The project must not be generated in one pass.
 - [Module 7 End-to-End MVP Flow](docs/module-7-end-to-end-mvp-flow.md)
 - [Module 8 Persistence and Project Registry](docs/module-8-project-registry.md)
 - [Module 9 Repository Upload and File Intake](docs/module-9-repository-file-intake.md)
+- [Module 10 Project Detail and Source Inventory UI](docs/module-10-project-detail-source-inventory.md)
 - [Architecture](docs/architecture.md)
 - [Migration Workflow](docs/migration-workflow.md)
 - [Testing Strategy](docs/testing-strategy.md)
@@ -94,7 +94,7 @@ The project must not be generated in one pass.
 
 ## Local Development
 
-Module 9 can be validated without installing dependencies:
+Module 10 can be validated without installing dependencies:
 
 ```bash
 npm.cmd run validate

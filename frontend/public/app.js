@@ -4,6 +4,11 @@ const form = document.querySelector("#project-form");
 const formResult = document.querySelector("#form-result");
 const projectRegistry = document.querySelector("#project-registry");
 const projectDetail = document.querySelector("#project-detail");
+const analysisTitle = document.querySelector("#analysis-title");
+const analysisUpdated = document.querySelector("#analysis-updated");
+const languageBreakdown = document.querySelector("#language-breakdown");
+const chunkPreview = document.querySelector("#chunk-preview");
+const fileInventory = document.querySelector("#file-inventory");
 
 const apiBaseUrl = "http://127.0.0.1:4000";
 
@@ -42,7 +47,7 @@ async function refreshProjectRegistry() {
 
     projectRegistry.innerHTML = projects
       .map((project) => {
-        return `<li><button type="button" data-project-id="${project.id}"><strong>${project.projectName}</strong><span>${project.fileCount} files · ${project.analyzedFileCount} analyzed</span></button></li>`;
+        return `<li><button type="button" data-project-id="${escapeHtml(project.id)}"><strong>${escapeHtml(project.projectName)}</strong><span>${project.fileCount} files - ${project.analyzedFileCount} analyzed</span></button></li>`;
       })
       .join("");
   } catch {
@@ -58,14 +63,40 @@ async function loadProjectDetail(projectId) {
     }
 
     const project = await response.json();
-    const languages = project.languages
-      .map((item) => `${item.language} (${item.fileCount})`)
-      .join(", ");
-
-    projectDetail.textContent = `${project.projectName}: ${project.fileCount} files. Languages: ${languages}. Updated ${project.updatedAt}.`;
+    renderProjectDetail(project);
   } catch (error) {
     projectDetail.textContent = error.message;
   }
+}
+
+function renderProjectDetail(project) {
+  const languages = project.languages
+    .map((item) => `${item.language} (${item.fileCount})`)
+    .join(", ");
+
+  projectDetail.textContent = `${project.projectName}: ${project.fileCount} files. Languages: ${languages}. Updated ${project.updatedAt}.`;
+  analysisTitle.textContent = project.projectName;
+  analysisUpdated.textContent = `Updated ${project.updatedAt}`;
+
+  languageBreakdown.innerHTML = project.languages
+    .map((item) => {
+      return `<div><span>${escapeHtml(item.language)}</span><strong>${item.fileCount}</strong></div>`;
+    })
+    .join("");
+
+  chunkPreview.innerHTML = project.knowledgeChunks
+    .slice(0, 5)
+    .map((chunk) => {
+      const source = formatSourceLabel(chunk.source);
+      return `<article><strong>${escapeHtml(source)}</strong><span>${escapeHtml(chunk.language)} - about ${chunk.tokenEstimate} tokens</span></article>`;
+    })
+    .join("");
+
+  fileInventory.innerHTML = project.files
+    .map((file) => {
+      return `<tr><td>${escapeHtml(file.path)}</td><td>${escapeHtml(file.language)}</td><td>${file.lineCount}</td><td>${formatBytes(file.sizeBytes)}</td></tr>`;
+    })
+    .join("");
 }
 
 projectRegistry.addEventListener("click", (event) => {
@@ -94,13 +125,16 @@ form.addEventListener("submit", async (event) => {
       maxFiles,
       maxFileSizeBytes,
     };
-    const previewResponse = await fetch(`${apiBaseUrl}/api/v1/projects/intake/preview`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
+    const previewResponse = await fetch(
+      `${apiBaseUrl}/api/v1/projects/intake/preview`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(intakeBody),
       },
-      body: JSON.stringify(intakeBody),
-    });
+    );
 
     const preview = await previewResponse.json();
 
@@ -129,7 +163,7 @@ form.addEventListener("submit", async (event) => {
       .join(", ");
 
     formResult.textContent = `${payload.projectName}: ${payload.fileCount} files discovered, ${payload.analyzedFileCount} analyzed. Languages: ${languages}.`;
-    await loadProjectDetail(payload.id);
+    renderProjectDetail(payload);
     await refreshProjectRegistry();
   } catch (error) {
     formResult.textContent = error.message;
@@ -138,3 +172,36 @@ form.addEventListener("submit", async (event) => {
 
 refreshBackendStatus();
 refreshProjectRegistry();
+
+function formatSourceLabel(source) {
+  if (source.startLine && source.endLine && source.startLine !== source.endLine) {
+    return `${source.path}:${source.startLine}-${source.endLine}`;
+  }
+
+  if (source.startLine) {
+    return `${source.path}:${source.startLine}`;
+  }
+
+  return source.path;
+}
+
+function formatBytes(value) {
+  if (value < 1024) {
+    return `${value} B`;
+  }
+
+  if (value < 1024 * 1024) {
+    return `${Math.round(value / 1024)} KB`;
+  }
+
+  return `${(value / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}

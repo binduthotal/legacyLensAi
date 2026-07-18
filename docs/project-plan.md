@@ -94,6 +94,14 @@ existing behavior.
 - Improve frontend intake controls and project detail display.
 - Status: completed.
 
+### Module 10: Project Detail and Source Inventory UI
+
+- Add project detail view.
+- Display analyzed file inventory.
+- Display language breakdown.
+- Add source chunk preview with citations.
+- Status: completed.
+
 ## Delivery Rules
 
 - Implement one module at a time.

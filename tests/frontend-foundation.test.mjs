@@ -33,7 +33,9 @@ test("frontend shell contains required migration workspace sections", async () =
   assert.match(html, /Project Registry/);
   assert.match(html, /Max files/);
   assert.match(html, /Max file size/);
-  assert.match(html, /Analysis Pipeline/);
+  assert.match(html, /Analysis Detail/);
+  assert.match(html, /File Inventory/);
+  assert.match(html, /Source Chunks/);
   assert.match(html, /Knowledge Rules/);
   assert.match(html, /Reports/);
 });
@@ -46,6 +48,9 @@ test("frontend script posts project intake to the analysis API", async () => {
   assert.match(script, /\/api\/v1\/projects/);
   assert.match(script, /method: "POST"/);
   assert.match(script, /maxFileSizeBytes/);
+  assert.match(script, /renderProjectDetail/);
+  assert.match(script, /formatSourceLabel/);
+  assert.match(script, /escapeHtml/);
 });
 
 test("resolveStaticAsset serves index and blocks missing files", () => {

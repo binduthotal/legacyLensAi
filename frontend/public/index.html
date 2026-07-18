@@ -105,13 +105,47 @@
         </section>
 
         <section class="panel wide" id="analysis">
-          <p class="eyebrow">Analysis Pipeline</p>
-          <ol class="pipeline">
-            <li><strong>Discover</strong><span>Files and languages</span></li>
-            <li><strong>Artifact</strong><span>Source content and metadata</span></li>
-            <li><strong>Ground</strong><span>Chunks, retrieval, citations</span></li>
-            <li><strong>Review</strong><span>Migration-ready knowledge</span></li>
-          </ol>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Analysis Detail</p>
+              <h2 id="analysis-title">No project selected</h2>
+            </div>
+            <span id="analysis-updated" class="muted-inline">
+              Analyze a project first.
+            </span>
+          </div>
+          <div class="detail-grid">
+            <section aria-label="Language breakdown">
+              <h3>Languages</h3>
+              <div id="language-breakdown" class="metric-list">
+                <span>No language data yet.</span>
+              </div>
+            </section>
+            <section aria-label="Source chunks">
+              <h3>Source Chunks</h3>
+              <div id="chunk-preview" class="chunk-preview">No source chunks yet.</div>
+            </section>
+          </div>
+          <section class="inventory-section" aria-label="File inventory">
+            <h3>File Inventory</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Path</th>
+                    <th>Language</th>
+                    <th>Lines</th>
+                    <th>Size</th>
+                  </tr>
+                </thead>
+                <tbody id="file-inventory">
+                  <tr>
+                    <td colspan="4">No files analyzed yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
         </section>
 
         <section class="panel" id="knowledge">
