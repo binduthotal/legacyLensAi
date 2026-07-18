@@ -11,7 +11,7 @@
     "build": "node ../scripts/verify-package.mjs .",
     "dev": "node ../scripts/verify-package.mjs .",
     "lint": "node ../scripts/verify-package.mjs .",
-    "test": "node ../scripts/verify-package.mjs .",
+    "test": "node --test ../tests/ai-retrieval.test.mjs",
     "typecheck": "node ../scripts/verify-package.mjs ."
   }
 }

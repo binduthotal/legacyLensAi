@@ -11,4 +11,11 @@ Planned responsibilities:
 - Source citation enforcement.
 - AI evaluation fixtures and scoring.
 
-No feature implementation has been added in Module 1.
+Module 5 adds the first AI retrieval foundation:
+
+- Provider-neutral embedding request contracts.
+- Knowledge chunk and citation models.
+- Retrieval query and ranking contracts.
+- Source-grounded prompt construction.
+
+No external model provider is called in this module.

@@ -11,9 +11,9 @@ Deliver production-ready migrations that faithfully reproduce the original
 application's functionality, business logic, workflows, APIs, and user
 experience in the target technology stack.
 
-This repository is currently in **Module 4: Parser Foundation**. The backend has
-a minimal dependency-free API shell, and the parser can discover source files,
-detect languages, and create source artifacts for future analyzers.
+This repository is currently in **Module 5: AI Retrieval Foundation**. The
+backend has a minimal dependency-free API shell, the parser can create source
+artifacts, and the AI layer now defines source-grounded retrieval contracts.
 
 ## Planned Capabilities
 
@@ -80,6 +80,7 @@ The project must not be generated in one pass.
 - [Module 2 Workspace & Tooling](docs/module-2-workspace-tooling.md)
 - [Module 3 Backend API Foundation](docs/module-3-backend-api-foundation.md)
 - [Module 4 Parser Foundation](docs/module-4-parser-foundation.md)
+- [Module 5 AI Retrieval Foundation](docs/module-5-ai-retrieval-foundation.md)
 - [Architecture](docs/architecture.md)
 - [Migration Workflow](docs/migration-workflow.md)
 - [Testing Strategy](docs/testing-strategy.md)
@@ -88,7 +89,7 @@ The project must not be generated in one pass.
 
 ## Local Development
 
-Module 4 can be validated without installing dependencies:
+Module 5 can be validated without installing dependencies:
 
 ```bash
 npm.cmd run validate

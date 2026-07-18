@@ -62,6 +62,7 @@ existing behavior.
 - Define embedding and retrieval interfaces.
 - Add prompt boundaries and citation requirements.
 - Add tests for retrieval contracts.
+- Status: completed.
 
 ### Module 6: Frontend Foundation
 
